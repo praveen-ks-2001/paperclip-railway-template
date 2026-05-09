@@ -9,6 +9,7 @@
     "build": "node scripts/patch-paperclip-ui.mjs && echo 'No build step required'"
   },
   "dependencies": {
+    "drizzle-orm": "0.41.0",
     "paperclipai": "2026.428.0"
   },
   "engines": {
