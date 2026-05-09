@@ -11,8 +11,10 @@ RUN mkdir -p /paperclip && chown -R paperclip:paperclip /paperclip
 
 WORKDIR /app
 
-# Copy package files and install dependencies
-COPY package.json ./
+# Copy package files and install dependencies.
+# The postinstall patch script must be available before npm install runs.
+COPY package.json package-lock.json* ./
+COPY scripts/patch-paperclip-ui.mjs ./scripts/patch-paperclip-ui.mjs
 RUN npm install --omit=dev
 
 # Copy application code
