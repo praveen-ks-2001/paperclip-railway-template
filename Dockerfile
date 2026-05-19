@@ -1,12 +1,15 @@
 FROM node:20-slim
 
-# Install gosu + CA certs for OpenAI/Codex SSL + curl for healthchecks
+# Install gosu + CA certs for OpenAI/Codex SSL + curl for healthchecks + groq CLI
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gosu \
     ca-certificates \
     curl \
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Groq CLI via npm globally
+RUN npm install -g @groq/cli
 
 # Create a non-root user (required: Claude CLI refuses --dangerously-skip-permissions as root)
 RUN groupadd -r paperclip && useradd -r -g paperclip -m -d /home/paperclip -s /bin/bash paperclip
