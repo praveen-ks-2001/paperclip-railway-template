@@ -135,6 +135,10 @@ function startPaperclip() {
         PORT: String(PAPERCLIP_PORT),
         HOST: "127.0.0.1",
         NODE_ENV: process.env.NODE_ENV || "production",
+        // Pass through LLM API keys if set
+        ...(process.env.GROQ_API_KEY && { GROQ_API_KEY: process.env.GROQ_API_KEY }),
+        ...(process.env.ANTHROPIC_API_KEY && { ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY }),
+        ...(process.env.OPENAI_API_KEY && { OPENAI_API_KEY: process.env.OPENAI_API_KEY }),
       },
     }
   );
@@ -254,6 +258,7 @@ function envVarStatus() {
     { key: "PAPERCLIP_ALLOWED_HOSTNAMES", required: true, label: "Allowed Hostnames", example: "your-app.up.railway.app" },
     { key: "PAPERCLIP_DEPLOYMENT_MODE", required: false, label: "Deployment Mode", example: "authenticated" },
     { key: "PAPERCLIP_HOME", required: false, label: "Paperclip Home", example: "/paperclip" },
+    { key: "GROQ_API_KEY", required: false, label: "Groq API Key", example: "gsk_..." },
     { key: "ANTHROPIC_API_KEY", required: false, label: "Anthropic API Key", example: "sk-ant-..." },
     { key: "OPENAI_API_KEY", required: false, label: "OpenAI API Key", example: "sk-..." },
   ];
@@ -381,3 +386,4 @@ startServer();
 if (isReady()) {
   startPaperclip();
 }
+
