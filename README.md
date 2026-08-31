@@ -69,7 +69,7 @@ The setup page auto-polls Railway's env vars by hitting `/setup/status` — each
 
 ```
 paperclip-railway/
-├── package.json          # installs paperclipai, defines start script
+├── package.json          # installs paperclipai + local agent CLIs, defines start script
 ├── scripts/
 │   └── start.mjs         # setup server + paperclip launcher
 └── README.md
@@ -99,3 +99,6 @@ Once Paperclip is running, this wrapper is transparent — it just passes throug
 
 **Agent runs fail with `401 Unauthorized: Missing bearer` (Codex / OpenAI)**
 → The Codex CLI (≥ 0.122) ignores the `OPENAI_API_KEY` env var and only reads credentials from `$CODEX_HOME/auth.json`. On boot, this wrapper seeds `~/.codex/auth.json` from `OPENAI_API_KEY` so Paperclip propagates it to each agent's Codex home. If you set the key after the first deploy, redeploy (or restart) so the file is written, then retry the task.
+
+**OpenCode adapter probe fails with `opencode: command not found`**
+→ Ensure the service was deployed with the latest dependencies so `opencode-ai` is installed, then redeploy/restart.
